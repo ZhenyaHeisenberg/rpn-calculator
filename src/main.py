@@ -33,8 +33,6 @@ def parse(ex):
 
 
 result = parse(ex)
-print(result)
-
 
 
 
@@ -77,10 +75,13 @@ def solve(result):
                     break
 
                 if s[i] == "/":
-                    s[i-2] = float(s[i-2]) / float(s[i-1])
-                    s.pop(i)
-                    s.pop(i-1)
-                    break
+                    if float(s[i-1]) != 0:
+                        s[i-2] = float(s[i-2]) / float(s[i-1])
+                        s.pop(i)
+                        s.pop(i-1)
+                        break
+                    else:
+                        return 'Error_5' 
 
                 if s[i] == "%":
                     if float(s[i-2]) % 1 == 0 and float(s[i-1]) % 1 == 0:
@@ -120,7 +121,7 @@ if type(result) == str:
         print('Ошибка: операция "//" только для целых')
     
 else:
-    print(solve(result))
+    print(solve(result)[0])
 
 
 
