@@ -38,7 +38,7 @@ print(result)
 
 
 
-"""def solve(result):
+def solve(result):
 
     s = result
 
@@ -120,8 +120,7 @@ if type(result) == str:
         print('Ошибка: операция "//" только для целых')
     
 else:
-    print(solve(result))"""
-
+    print(solve(result))
 
 
 
