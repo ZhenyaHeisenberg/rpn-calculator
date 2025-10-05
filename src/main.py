@@ -1,4 +1,4 @@
-ex = input()
+ex = input("Введите выражение:\n")
 
 operators = "+-*/%&^"
 
@@ -121,7 +121,9 @@ if type(result) == str:
         print('Ошибка: операция "//" только для целых')
     
 else:
-    print(solve(result)[0])
+    print("Ответ: solve(result)[0]")
+
+print("")
 
 
 
