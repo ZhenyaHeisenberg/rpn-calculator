@@ -1,5 +1,5 @@
 while True:
-    ex = input("Введите выражение:\n")
+    ex = input()
 
     operators = "+-*/%&^"
     
@@ -45,6 +45,7 @@ while True:
 
 
     result = parse(ex)
+
 
     def solve(result):
 
@@ -124,10 +125,7 @@ while True:
         print('\n', result, sep = "")
         
     else:
-        print("Ответ: ", solve(result)[0], "\n\n\n")
-
-
-
+        print(solve(result)[0], "\n\n\n")
 
 
 

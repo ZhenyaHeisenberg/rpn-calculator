@@ -1,7 +1,6 @@
-    
 
 def solve(result):
-    operators = "+-~*/%//^"
+    operators = "+-~*/%&^"
 
     s = result
 
@@ -76,6 +75,4 @@ def solve(result):
         return s
     else:
         return s[0]
-
-            
 

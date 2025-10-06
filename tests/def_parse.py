@@ -1,4 +1,4 @@
-     
+
 def parse(ex):
 
 
@@ -35,4 +35,3 @@ def parse(ex):
         return 'Ошибка ввода операторов и операндов\n\n\n'
         
     return s
-
