@@ -1,8 +1,6 @@
 from def_check_operators import check_operators
 from def_solve import solve
 
-s = ['1', '(', '4', '+', '4', ')', '4']
-
 def check_brackets(stack): #проверяет, верно ли расставлены скобки
 
     if type(stack) == int:
@@ -24,4 +22,3 @@ def check_brackets(stack): #проверяет, верно ли расставл
         
             
     return stack
-print(check_brackets(s))

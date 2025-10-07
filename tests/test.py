@@ -4,7 +4,6 @@ from def_check_operators import check_operators
 from def_check_brackets import check_brackets
 
 
-
 # Тесты parse()
 """Проверяет на наличие неоткрытых/незакрытых скобок, создает стек"""
 def test_parse():
