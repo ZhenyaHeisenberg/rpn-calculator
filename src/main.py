@@ -4,9 +4,14 @@ while True:
 
     operators = "+-*/%&^"
     
-    
+    def check_operators(substack): #проверяет, верно ли колличество операторов
+        if len(substack) != (2 * (substack.count("+") + substack.count("-") + substack.count("*") + substack.count("/") + substack.count("%") + substack.count("&") + substack.count("^")) + substack.count("~") + 1):
+            return 0
+        else:
+            return 1
         
-    def parse(ex):
+    
+    def parse(ex): #Преобразует строку в стек
 
         brackets_count = 0
         for i in range(len(ex)):
@@ -24,35 +29,38 @@ while True:
         ex = ex.replace(")", " ) ")
         ex = ex.replace(",", ".")
         
+    
 
-        ex = ex.replace("(", "")
-        ex = ex.replace(")", "")
+        stack = ex.split() # (1)
+     
+        return stack
 
+    stack = parse(ex)
+
+    def check_brackets(stack): #проверяет, верно ли расставлены скобки
             
+        while ")" in stack:
+            close_bracket_index = stack.index(")")
+            for i in range(close_bracket_index):
+                if stack[i] == "(":
+                    open_bracket_index = i
 
-        
-        
-        
-            
+            substack = stack[open_bracket_index+1:close_bracket_index]
 
-        register = ex.split() # (1)
+            if check_operators(substack) == 0:
+                return 'Ошибка ввода операторов и операндов'
+            else:
+                stack.pop(close_bracket_index)
+                stack.pop(open_bracket_index)
+        return stack
 
-        if len(register) != (2 * (register.count("+") + register.count("-") + register.count("*") + register.count("/") + register.count("%") + register.count("&") + register.count("^")) + register.count("~")) + 1: # (4)
-            return 'Ошибка ввода операторов и операндов\n\n\n'
-        
-        return register
+    
+    checked_stack = check_brackets(stack)
 
+    def solve(checked_stack): #принимает стек, выдает ответ
 
+        s = checked_stack
 
-
-    result = parse(ex)
-
-
-    def solve(result):
-
-        s = result
-
-        
         while len(s) > 1:
             for i in range(len(s)):
 
@@ -123,11 +131,21 @@ while True:
         return s
 
 
-    if type(result) == str:
-        print('\n', result, sep = "")
-        
-    else:
-        print("\nОтвет: ", solve(result)[0], "\n\n\n")
 
 
+
+
+    def calc(ex):
+        if type(stack) == str:
+            return stack
+        else:
+            checked_stack = check_brackets(stack)
+
+            if type(checked_stack) == str:
+                return checked_stack
+            else:
+                return solve(checked_stack)[0]
+    
+    print("\n", calc(ex), "\n\n", sep="")
+    
 
