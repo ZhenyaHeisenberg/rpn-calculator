@@ -1,5 +1,6 @@
 while True:
-    ex = input()
+    
+    ex = input("Введите выражение: \n")
 
     operators = "+-*/%&^"
     
@@ -34,12 +35,12 @@ while True:
         
             
 
-        s = ex.split() # (1)
+        register = ex.split() # (1)
 
-        if len(s) != (2 * (s.count("+") + s.count("-") + s.count("*") + s.count("/") + s.count("%") + s.count("&") + s.count("^")) + s.count("~")) + 1: #(кол-во бинарных операторов) * 2 + кол-во унарных операторов + 1 == кол-во элементов в стеке (условие правильности записи операторов и операндов в обратной польсокй нотации) 
+        if len(register) != (2 * (register.count("+") + register.count("-") + register.count("*") + register.count("/") + register.count("%") + register.count("&") + register.count("^")) + register.count("~")) + 1: # (4)
             return 'Ошибка ввода операторов и операндов\n\n\n'
         
-        return s
+        return register
 
 
 
@@ -63,6 +64,7 @@ while True:
                     return "Ошибка ввода операторов и операндов"
                 
                 if str(s[i]) in operators and i < 2: # (3)
+                    
                     return "Ошибка ввода операторов и операндов"
                 elif str(s[i]) in operators and i >= 2:
 
@@ -125,7 +127,7 @@ while True:
         print('\n', result, sep = "")
         
     else:
-        print(solve(result)[0], "\n\n\n")
+        print("\nОтвет: ", solve(result)[0], "\n\n\n")
 
 
 
