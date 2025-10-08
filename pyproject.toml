@@ -1,0 +1,8 @@
+[project]
+name = "rpn-calculator"
+version = "1.4"
+description = "Add your description here описание проекта по функциям"
+requires-python = ">=3.13.7"
+dependencies = [
+    "pytest>=8.4.2",
+]
