@@ -1,7 +1,10 @@
 operators = "+-*/%&^"
         
     
-def parse(ex): #Преобразует строку в стек
+def parse(ex):
+    
+    """Функция приводит строку к правильному виду
+        и создает из нее стек"""
 
     brackets_count = 0
     for i in range(len(ex)):
@@ -26,7 +29,13 @@ def parse(ex): #Преобразует строку в стек
     return stack
 
 
-def check_brackets(stack): #проверяет, верно ли расставлены скобки
+def check_brackets(stack):
+    
+    """утем нахождения последнего символа ')' и предшествующего ему
+    символа '(', выбирает скобки с высшим приоритетом.
+    Проверяет, корректно ли выражение в скобках, применяя на него функцию solve().
+    если выражение корректно, Удаляет скобки из стека"""
+    
             
     while ")" in stack:
         close_bracket_index = stack.index(")")
@@ -43,13 +52,21 @@ def check_brackets(stack): #проверяет, верно ли расставл
             stack.pop(open_bracket_index)
     return stack
 
-def check_operators(substack): #проверяет, верно ли колличество операторов
+def check_operators(substack):
+    
+    """Проверяет правильность ввода операторов и операндов
+    в соответствии с формулой,писанной в README"""
+    
     if len(substack) != (2 * (substack.count("+") + substack.count("-") + substack.count("*") + substack.count("/") + substack.count("%") + substack.count("&") + substack.count("^")) + substack.count("~") + 1):
         return 0
     else:
         return 1
 
-def solve(checked_stack): #принимает стек, выдает ответ
+def solve(checked_stack):
+
+    """Находит первое вхождение оператора в стеке, после чего применяет его
+    предыдущий/предыдущийе операнд/операнды, записывает результат в стек,
+    а отработавшые символы из стека удаляет"""
 
     if check_operators(checked_stack) == 0:
         return 'Ошибка ввода операторов и операндов'
@@ -131,6 +148,10 @@ def solve(checked_stack): #принимает стек, выдает ответ
 
 
 def calc(ex):
+    
+    """Сочетает в себе все служебные функции, calc(ввод)
+    напрямую выдает результат, опираясь на служебные функции"""
+ 
     if type(parse(ex)) == str:
         return stack
     else:
