@@ -4,6 +4,7 @@ from def_check_operators import check_operators
 from def_check_brackets import check_brackets
 
 
+
 # Тесты parse()
 """Проверяет на наличие неоткрытых/незакрытых скобок, создает стек"""
 def test_parse():
@@ -33,24 +34,24 @@ def test_check_brackets():
 """Преобразует стек в ответ"""
 def test_solve():
 
-    assert solve(['3', '4', '+']) == [7.0]
-    assert solve(['3', '4', '^']) == [81.0]
-    assert solve(['81', '0.5', '^']) == [9.0]
-    assert solve(['3.6', '9.5', '*']) == [34.2]
-    assert solve(['66', '7', '&', '2', '^']) == [81.0]
-    assert solve(['66', '6', '/', '2', '^']) == [121.0]
-    assert solve(['3', '4', '6', '*', '+', '9', '%']) == [0.0]
+    assert solve(['3', '4', '+']) == ['7.0']
+    assert solve(['3', '4', '^']) == ['81.0']
+    assert solve(['81', '0.5', '^']) == ['9.0']
+    assert solve(['3.6', '9.5', '*']) == ['34.2']
+    assert solve(['66', '7', '&', '2', '^']) == ['81.0']
+    assert solve(['66', '6', '/', '2', '^']) == ['121.0']
+    assert solve(['3', '4', '6', '*', '+', '9', '%']) == ['0.0']
 
 
 # Общие тесты solve(parce()) 
 def test_main():
 
-    assert solve(check_brackets(parse("9 3 /"))) == [3.0]
-    assert solve(check_brackets(parse("3 6 - 6 *"))) == [-18.0]
+    assert solve(check_brackets(parse("9 3 /"))) == ['3.0']
+    assert solve(check_brackets(parse("3 6 - 6 *"))) == ['-18.0']
     assert solve(check_brackets(parse("3 (4 6) * + 9 %"))) == "Ошибка ввода операторов и операндов"
     assert solve(check_brackets(parse("3 ~   2 %   9   ^ 0 - ( 9  5 ) - +"))) == "Ошибка ввода операторов и операндов"
     assert solve(check_brackets(parse("(4 6) +  8 %   4 7    - ~ ^ "))) == "Ошибка ввода операторов и операндов"
-    assert solve(check_brackets(parse("5 2 // 4 + 3 ^   4  6 + *"))) == [2160.0]
+    assert solve(check_brackets(parse("5 2 // 4 + 3 ^   4  6 + *"))) == ['2160.0']
 
 
 
