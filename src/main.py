@@ -2,10 +2,7 @@ from constants import OPERATORS
         
     
 def parse(ex: str) -> list[str] | str:
-    """принимает на вход строку - выражение,
-    значение которого необходимо вычислить"""
 
-    
     """Функция приводит строку к правильному виду
     и создает из нее стек"""
 
@@ -33,9 +30,7 @@ def parse(ex: str) -> list[str] | str:
 
 
 def check_brackets(stack: list[str]) -> list[str] | str:
-    """принимает на вход список - результат функции parse().
-    Если есть скобки - проверяет правильность их использования"""
-    
+
     """Путем нахождения последнего символа ')' и предшествующего ему
     символа '(', выбирает скобки с высшим приоритетом.
     Проверяет, корректно ли выражение в скобках, применяя на него функцию solve().
@@ -59,23 +54,14 @@ def check_brackets(stack: list[str]) -> list[str] | str:
 
 def check_operators(substack: list[str]) -> bool:
     
-    """принимает на вход список - результат функции check_brackets().
-    В соответствии описанной в README формуле проверяет
-    правильность введенного выражения
-    Выдает результат True если выражение простороено верно
-    Выдает результат False если выражение простороено неверно"""
+    """В соответствии описанной в README формуле проверяет
+    правильность введенного выражения"""
     
     
-    if len(substack) != (2 * (substack.count("+") + substack.count("-") + substack.count("*") + substack.count("/") + substack.count("%") + substack.count("&") + substack.count("^")) + substack.count("~") + 1):
-        return False
-    else:
-        return True
+    return len(substack) == (2 * (substack.count("+") + substack.count("-") + substack.count("*") + substack.count("/") + substack.count("%") + substack.count("&") + substack.count("^")) + substack.count("~") + 1)
+
 
 def solve(checked_stack: list[str]) -> list[str] | str:
-
-    """принимает на вход список - результат функции check_brackets().
-    Для проверки корректности выражения использует check_operators()"""
-    
 
     """Находит первое вхождение оператора в стеке, после чего применяет его
     на предыдущий/предыдущийе операнд/операнды, записывает результат в стек,
@@ -89,70 +75,51 @@ def solve(checked_stack: list[str]) -> list[str] | str:
     while len(s) > 1:
         for i in range(len(s)):
 
-            if s[i] == "~" and i > 0: # (2)
-                s[i-1] = str(float(s[i-1]) * (-1))
-                s.pop(i)
-                break
-            elif s[i] == "~" and i == 0:
-                return "Ошибка ввода операторов и операндов"
+            if s[i] == "~":
+                if i > 0:
+                    s[i-1] = str(float(s[i-1]) * (-1))
+                    s.pop(i)
+                    break
+                else:
+                    return "Ошибка ввода операторов и операндов"
+
+            if s[i] in OPERATORS:
+                if i < 2:
+                    return "Ошибка ввода операторов и операндов"
                 
-            if s[i] in OPERATORS and i < 2: # (3)
-                    
-                return "Ошибка ввода операторов и операндов"
-            elif str(s[i]) in OPERATORS and i >= 2:
-
-                    
-                if s[i] == "+":
-                    s[i-2] = str(float(s[i-2]) + float(s[i-1]))
-                    s.pop(i)
-                    s.pop(i-1)
-                    break
-
-                if s[i] == "-":
-                    s[i-2] = str(float(s[i-2]) - float(s[i-1]))
-                    s.pop(i)
-                    s.pop(i-1)
-                    break
-
-                if s[i] == "*":
-                    s[i-2] = str(float(s[i-2]) * float(s[i-1]))
-                    s.pop(i)
-                    s.pop(i-1)
-                    break
-
-                if s[i] == "/":
-                    if float(s[i-1]) == 0:
-                        return 'Ошибка: деление на 0 невозможно\n\n\n'
-                    else:
-                        s[i-2] = str(float(s[i-2]) / float(s[i-1]))
-                        s.pop(i)
-                        s.pop(i-1)
-                        break
-                         
-
-                if s[i] == "%":
-                    if float(s[i-2]) % 1 == 0 and float(s[i-1]) % 1 == 0:
-                        s[i-2] = str(float(s[i-2]) % float(s[i-1]))
-                        s.pop(i)
-                        s.pop(i-1)
-                        break
-                    else:
-                        return 'Ошибка: операция "%" только для целых\n\n\n'
-
-                if s[i] == "&":
-                    if float(s[i-2]) % 1 == 0 and float(s[i-1]) % 1 == 0:
-                        s[i-2] = str(float(s[i-2]) // float(s[i-1]))
-                        s.pop(i)
-                        s.pop(i-1)
-                        break
-                    else:
-                        return 'Ошибка: операция "//" только для целых\n\n\n' 
-
-                if s[i] == "^":
-                    s[i-2] = str(float(s[i-2]) ** float(s[i-1]))
-                    s.pop(i)
-                    s.pop(i-1)
-                    break
+                match s[i]:
+                    case "+":
+                        result = float(s[i-2]) + float(s[i-1])
+                    case "-":
+                        result = float(s[i-2]) - float(s[i-1])
+                    case "*":
+                        result = float(s[i-2]) * float(s[i-1])
+                    case "/":
+                        if float(s[i-1]) == 0:
+                            return 'Ошибка: деление на 0 невозможно\n\n\n'
+                        result = float(s[i-2]) / float(s[i-1])
+                    case "%":
+                        if float(s[i-1]) == 0:
+                            return 'Ошибка: деление на 0 невозможно\n\n\n'
+                        elif float(s[i-1])%1 != 0 or float(s[i-2])%1 != 0:
+                            return 'Ошибка: операция % только для целых чисел\n\n\n'
+                        result = float(s[i-2]) % float(s[i-1])
+                    case "&":
+                        if float(s[i-1]) == 0:
+                            return 'Ошибка: деление на 0 невозможно\n\n\n'
+                        elif float(s[i-1])%1 != 0 or float(s[i-2])%1 != 0:
+                            return 'Ошибка: операция // только для целых чисел\n\n\n'
+                        result = float(s[i-2]) // float(s[i-1])
+                    case "^":
+                        result = float(s[i-2]) ** float(s[i-1])
+                    case _:
+                        return "Ошибка ввода операторов и операндов"
+                
+                # Общая часть для всех операций
+                s[i-2] = str(result)
+                s.pop(i)
+                s.pop(i-1)
+                break
 
     return s
 
@@ -162,15 +129,9 @@ def solve(checked_stack: list[str]) -> list[str] | str:
 
 
 def calc(ex: str) -> str:
-
-    """принимает на вход - результат функции check_brackets().
-    Для проверки корректности выражения использует check_operators()"""
-    
     
     """Сочетает в себе все служебные функции, calc(ввод)
     напрямую выдает результат, опираясь на служебные функции"""
-
-    
 
 
     if isinstance(parse(ex), str):

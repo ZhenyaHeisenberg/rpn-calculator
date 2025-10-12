@@ -20,69 +20,50 @@ def solve(checked_stack: list[str]) -> list[str] | str:
     while len(s) > 1:
         for i in range(len(s)):
 
-            if s[i] == "~" and i > 0: # (2)
-                s[i-1] = str(float(s[i-1]) * (-1))
-                s.pop(i)
-                break
-            elif s[i] == "~" and i == 0:
-                return "Ошибка ввода операторов и операндов"
+            if s[i] == "~":
+                if i > 0:
+                    s[i-1] = str(float(s[i-1]) * (-1))
+                    s.pop(i)
+                    break
+                else:
+                    return "Ошибка ввода операторов и операндов"
+
+            if s[i] in OPERATORS:
+                if i < 2:
+                    return "Ошибка ввода операторов и операндов"
                 
-            if s[i] in OPERATORS and i < 2: # (3)
-                    
-                return "Ошибка ввода операторов и операндов"
-            elif str(s[i]) in OPERATORS and i >= 2:
-
-                    
-                if s[i] == "+":
-                    s[i-2] = str(float(s[i-2]) + float(s[i-1]))
-                    s.pop(i)
-                    s.pop(i-1)
-                    break
-
-                if s[i] == "-":
-                    s[i-2] = str(float(s[i-2]) - float(s[i-1]))
-                    s.pop(i)
-                    s.pop(i-1)
-                    break
-
-                if s[i] == "*":
-                    s[i-2] = str(float(s[i-2]) * float(s[i-1]))
-                    s.pop(i)
-                    s.pop(i-1)
-                    break
-
-                if s[i] == "/":
-                    if float(s[i-1]) == 0:
-                        return 'Ошибка: деление на 0 невозможно\n\n\n'
-                    else:
-                        s[i-2] = str(float(s[i-2]) / float(s[i-1]))
-                        s.pop(i)
-                        s.pop(i-1)
-                        break
-                         
-
-                if s[i] == "%":
-                    if float(s[i-2]) % 1 == 0 and float(s[i-1]) % 1 == 0:
-                        s[i-2] = str(float(s[i-2]) % float(s[i-1]))
-                        s.pop(i)
-                        s.pop(i-1)
-                        break
-                    else:
-                        return 'Ошибка: операция "%" только для целых\n\n\n'
-
-                if s[i] == "&":
-                    if float(s[i-2]) % 1 == 0 and float(s[i-1]) % 1 == 0:
-                        s[i-2] = str(float(s[i-2]) // float(s[i-1]))
-                        s.pop(i)
-                        s.pop(i-1)
-                        break
-                    else:
-                        return 'Ошибка: операция "//" только для целых\n\n\n' 
-
-                if s[i] == "^":
-                    s[i-2] = str(float(s[i-2]) ** float(s[i-1]))
-                    s.pop(i)
-                    s.pop(i-1)
-                    break
+                match s[i]:
+                    case "+":
+                        result = float(s[i-2]) + float(s[i-1])
+                    case "-":
+                        result = float(s[i-2]) - float(s[i-1])
+                    case "*":
+                        result = float(s[i-2]) * float(s[i-1])
+                    case "/":
+                        if float(s[i-1]) == 0:
+                            return 'Ошибка: деление на 0 невозможно\n\n\n'
+                        result = float(s[i-2]) / float(s[i-1])
+                    case "%":
+                        if float(s[i-1]) == 0:
+                            return 'Ошибка: деление на 0 невозможно\n\n\n'
+                        elif float(s[i-1])%1 != 0 or float(s[i-2])%1 != 0:
+                            return 'Ошибка: операция % только для целых чисел\n\n\n'
+                        result = float(s[i-2]) % float(s[i-1])
+                    case "&":
+                        if float(s[i-1]) == 0:
+                            return 'Ошибка: деление на 0 невозможно\n\n\n'
+                        elif float(s[i-1])%1 != 0 or float(s[i-2])%1 != 0:
+                            return 'Ошибка: операция // только для целых чисел\n\n\n'
+                        result = float(s[i-2]) // float(s[i-1])
+                    case "^":
+                        result = float(s[i-2]) ** float(s[i-1])
+                    case _:
+                        return "Ошибка ввода операторов и операндов"
+                
+                # Общая часть для всех операций
+                s[i-2] = str(result)
+                s.pop(i)
+                s.pop(i-1)
+                break
 
     return s
