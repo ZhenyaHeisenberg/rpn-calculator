@@ -1,6 +1,5 @@
 from def_parse import parse
 from def_solve import solve
-from def_check_operators import check_operators
 from def_check_brackets import check_brackets
 
 

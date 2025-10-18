@@ -1,4 +1,4 @@
-def parse(ex): #Преобразует строку в стек
+def parse(ex: str) -> list[str] | str: #Преобразует строку в стек
 
     brackets_count = 0
     for i in range(len(ex)):
