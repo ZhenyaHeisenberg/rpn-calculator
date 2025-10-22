@@ -19,5 +19,5 @@ def parse(ex: str) -> list[str] | str: #Преобразует строку в �
     
 
     stack = ex.split() # (1)
-     
+    
     return stack
